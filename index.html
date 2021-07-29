@@ -1,39 +1,623 @@
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Addons for World of Warcraft: Classic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Vanilla Plus</title>
 </head>
 <body>
-
-<header>
-  <img src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/JVIX5HPT66L41555957772316.png">
-  <nav>
-    <ul>
-      <li><a href="">Раздел 1</a></li>
-      <li><a href="">Раздел 2</a></li>
-      <li><a href="">Раздел 3</a></li>
-    </ul>
-  </nav>
-</header>
-
-<main>
-  <table>
-    <tr>
-      <th>Аддон</th>
-      <th>Описание</th>
-      <th>Скачать</th>
-    </tr>
-    <tr>
-      <td>Questie</td>
-      <td>Отмечает на карте цели квестов, отображает печень квестов по локациям, ведет учет выполненных квестов.</td>
-      <td><a href="https://github.com/AeroScripts/QuestieDev/releases/latest">Скачать</a></td>
-    </tr>
-  </table>
-</main>
-
-<footer>
-  2019
-</footer>
-
+    <div class="container-fluid">
+        <div class="row">
+            <!--
+                <div id="filter1" class="col">
+                    <select class="form-select" name="filter1">
+                        <option selected>Выбор слота</option>
+                        <option value="1">Броня</option>
+                        <option value="2">Бижутерия</option>
+                        <option value="3">Оружие</option>
+                        <option value="4">Реликвии</option>
+                    </select>
+                </div>
+ 
+                <div id="filter2" class="col">
+                </div>
+ 
+                <div id="filter3" class="col">
+                </div>
+            -->
+ 
+            <div class="col">
+                Мне нравится база данных Wowhead, открываешь Предметы -> Броня -> Ткань -> Голова и выбираешь из списка нужную тебе вещь, например, с максимальным спд или резистом к огню.
+                Но это удобно если ты, например, маг. А если ты, например, элем шаман - то тебе сначала нужно просмотреть сначала весь список ткани, затем весь список кожи, затем весь список кольчуги и затем уже сравнивать между собой лучшие найденные вещи с разных страниц.
+                Поэтому первое, что кажется мне удобным, это выбор сначала типа вещи (ячейки экипировки), например "Голова", а уже затем выбор типа брони (ткань, кожа, ...) с возможностью отображения одновременно нескольких типов брони, например, показать в одной таблице все тканевые и кожаные шлемы.
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col-auto">
+                <div class="border border-dark">
+                    <div class="row">
+                        <div class="col-auto p-4">
+                            <select class="form-select">
+                                <option value="1" selected>Голова&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            </select>
+                        </div>
+                        <div class="col-auto p-4">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <label class="form-check-label" for="inlineCheckbox1">Латы</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                <label class="form-check-label" for="inlineCheckbox2">Кольчуга</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" checked>
+                                <label class="form-check-label" for="inlineCheckbox3">Кожа</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4" checked>
+                                <label class="form-check-label" for="inlineCheckbox4">Ткань</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <br><br>
+ 
+        <div class="row">
+            <div class="col">
+                Но это выглядит (а я надеюсь что не только выглядит, но и является) удобным пока мы рассматриваем только броню у которой есть типы (голова, плечи, перчатки, ...).
+                Хорошо, для брони у которой нет типа (плащ, ожерелье, ...) можно просто не отображать панель с "галочками". Но что делать со всем остальным (оружие, реликвии, дальний бой)?
+            </div>
+        </div>
+ 
+        <br><br>
+ 
+        <div class="row">
+            <div class="col">
+                <b>Вариант 1:</b> сделать возможность выбора по слотам экипировки так как они представлены в игре. То есть есть отдельный слот под правую руку и отдельно слот под левую руку.
+                И в левой руке персонаж может носить или оружие для левой руи, или оф-хенд, или щит (т.е. совершенно разные типы экипировки). А еще для дальнего боя и реликвии в игре используется один слот.
+                Но, я думаю, что будет не удобно если выбрав "Дальний бой/Реликвия" придется выбирать среди совершенно разнородных элементов (лук, тотем, ... ).
+                Поэтому я думаю даже сделав сортировку по слотам экипировки будет лучше разнести "Дальний бой" и "Реликвия" в разные пункты.
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col-auto">
+                <div class="row">
+                    <div class="col-auto p-1">
+                        <div class="border border-dark p-3">
+                            Слоты экипировки как в игре<br>(список можно раскрыть)<br>
+                            <select class="form-select">
+                                <option selected>< Слот ></option>
+                                <option value="1">Голова</option>
+                                <option value="2">Шея</option>
+                                <option value="3">Плечи</option>
+                                <option value="4">Спина</option>
+                                <option value="5">Тело</option>
+                                <option value="6">Наручи</option>
+                                <option value="7">Перчатки</option>
+                                <option value="8">Пояс</option>
+                                <option value="9">Штаны</option>
+                                <option value="10">Сапоги</option>
+                                <option value="11">Кольцо</option>
+                                <option value="12">Тринкет</option>
+                                <option value="13">Правя рука</option>
+                                <option value="14">Левая рука</option>
+                                <option value="15">Дальний бой/Реликвия</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-auto p-1">
+                        <div class="border border-dark p-3">
+                            Слоты экипировки (вариант 2)<br>(список можно раскрыть)<br>
+                            <select class="form-select">
+                                <option selected>< Слот ></option>
+                                <option value="1">Голова</option>
+                                <option value="2">Шея</option>
+                                <option value="3">Плечи</option>
+                                <option value="4">Спина</option>
+                                <option value="5">Тело</option>
+                                <option value="6">Наручи</option>
+                                <option value="7">Перчатки</option>
+                                <option value="8">Пояс</option>
+                                <option value="9">Штаны</option>
+                                <option value="10">Сапоги</option>
+                                <option value="11">Кольцо</option>
+                                <option value="12">Тринкет</option>
+                                <option value="13">Правя рука</option>
+                                <option value="14">Левая рука</option>
+                                <option value="15">Дальний бой</option>
+                                <option value="16">Реликвия</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col">
+                Тогда выбирая слоты Шея, Спина, Кольцо, Тринкет - не будет никаких уточняющих "галочек".<br>
+                Выбирая слоты Голова, Плечи, Тело, Наручи, Перчатки, Пояс, Штаны, Сапоги - появятся "галочки": Ткань, Кожа, Кольчуга, Латы.<br>
+                Выбирая слот Реликвия - появится выбор между Манускриптом, Идолом и Тотемом (без "галочек", ведь не нужно одновременно на экране сравнивать что лучше экипировать - Идол или Тотем,нужно сравнивать все Идолы между собой).<br>
+                Вот в случае Дальнего боя уже появляется момент который мне не нравится. Логично дать возможность показать на экране одновременно и Луки и Арбалеты и Стрелковое - значит это должны быть "галочки". Но среди этих типов оружия выбиваются Ванды. Или сделать для них такую же галочку рядом с Луками, Арбалетами или Стрелковым. Или выделить в отдельно в список предметов по слотам, как уже выделены Реликвии.<br>
+                И совсем мне не нравится как обстоит дело со слотом Левая рука - в нем может быть: просто одноручное оружие, одноручное оружие для левой руки, оф-хенд, щит (щит вообще к броне относится).<br>
+                <b>Будет ли удобен такой вариант сортировки (по слотам экипировки)? Как удобнее сделать сортировку по оружию?</b>
+            </div>
+        </div>
+ 
+        <div class="border border-dark p-4">
+            <div class="row">
+                <div id="filter1" class="col-auto">
+                    <select class="form-select" name="filter1">
+                        <option selected>< Слот ></option>
+                        <option value="1">Голова</option>
+                        <option value="2">Шея</option>
+                        <option value="3">Плечи</option>
+                        <option value="4">Спина</option>
+                        <option value="5">Тело</option>
+                        <option value="6">Наручи</option>
+                        <option value="7">Перчатки</option>
+                        <option value="8">Пояс</option>
+                        <option value="9">Штаны</option>
+                        <option value="10">Сапоги</option>
+                        <option value="11">Кольцо</option>
+                        <option value="12">Тринкет</option>
+                        <option value="13">Правя рука</option>
+                        <option value="14">Левая рука</option>
+                        <option value="15">Дальний бой&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                        <option value="16">Реликвия</option>
+                    </select>
+                    <br>(выберите пункт чтобы раскрыть<br>доп. параметр сортировки)
+                </div>
+ 
+                <div id="filter2" class="col-auto">
+                </div>
+ 
+                <div id="filter3" class="col-auto">
+                </div>
+            </div>
+        </div>
+ 
+        <br><br><br>
+ 
+        <div class="row">
+            <div class="col">
+                <b>Вариант 2:</b> сделать возможность выбора по типу экипировки. В этом случае щит (который берется в левую руку) будет вместе с броней, а одноручное оружие которое берется в левую руку будет вместе с оружием.<br>
+                А еще будет ли лучше "разбить" первый длинный список на несколько более коротких, но из которых придется выбирать два раза (сначала выбрать Броню, затем выбрать Наплечники)?<br>
+                Или удобнее одним длинным списком (но зато сразу выбрав Наплечники)?
+            </div>
+        </div>
+ 
+        <div class="border border-dark p-4">
+            <div class="row">
+                <div id="filter21" class="col-auto">
+                    <select class="form-select" name="filter22_1">
+                        <option selected>< Слот ></option>
+                        <option value="1">Броня</option>
+                        <option value="2">Бижутерия</option>
+                        <option value="3">Оружие</option>
+                        <option value="4">Дальний бой&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                        <option value="5">Реликвия</option>
+                    </select>
+                    <br>(выберите пункт чтобы раскрыть<br>доп. параметр сортировки)
+                </div>
+ 
+                <div id="filter22" class="col-auto">
+                </div>
+ 
+                <div id="filter23" class="col-auto">
+                </div>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col">
+                Не уверен на счет того что все одноручное оружие бывает для левой руки, но это я потом уточню. Тут список "галочек" для оружия выглядит перегруженным, <b>но, возможно, это будет удобно для сравнения?</b>
+            </div>
+        </div>
+ 
+        <br><br><br><br><br>
+ 
+    </div>
+ 
 </body>
 </html>
+
+
+
+
+
+ 
+<script>
+document.addEventListener('change', function (event) {
+    if (event.target.closest('select[name=filter1]')) {
+        document.querySelector('#filter2').innerHTML = '';
+        document.querySelector('#filter3').innerHTML = '';
+        switch (document.querySelector('select[name=filter1]').value) {
+            case '1':
+            case '3':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '10':
+                filter2_1();
+                break;
+ 
+            case '13':
+                filter2_2();
+                break;
+            
+            case '14':
+                filter2_3();
+                break;
+ 
+            case '15':
+                filter2_4();
+                break;
+ 
+            case '16':
+                filter2_5();
+                break;
+        }
+    }
+    else if (event.target.closest('select[name=filter2_2]')) {
+        document.querySelector('#filter3').innerHTML = '';
+        switch (document.querySelector('select[name=filter2_2]').value) {
+            case '1': filter3_1(); break;
+            case '2': filter3_2(); break;
+        }
+    }
+    else if (event.target.closest('select[name=filter22_1]')) {
+        document.querySelector('#filter22').innerHTML = '';
+        document.querySelector('#filter23').innerHTML = '';
+        switch (document.querySelector('select[name=filter22_1]').value) {
+            case '1': filter22_11(); break;
+            case '2': filter22_12(); break;
+            case '3': filter22_13(); break;
+            case '4': filter22_14(); break;
+            case '5': filter22_15(); break;
+        }
+    }
+    else if (event.target.closest('select[name=filter22_11]')) {
+        document.querySelector('#filter23').innerHTML = '';
+        switch (document.querySelector('select[name=filter22_11]').value) {
+            case '1': 
+            case '2': 
+            case '4': 
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                filter22_21();
+                break;
+        }
+    }
+    else if (event.target.closest('select[name=filter22_13]')) {
+        document.querySelector('#filter23').innerHTML = '';
+        switch (document.querySelector('select[name=filter22_13]').value) {
+            case '1': filter22_22(); break;
+            case '2': filter22_23(); break;
+        }
+    }
+    else if (event.target.closest('select[name=filter22_14]')) {
+        document.querySelector('#filter23').innerHTML = '';
+        switch (document.querySelector('select[name=filter22_14]').value) {
+            case '2': filter22_24(); break;
+        }
+    }
+
+
+
+
+
+
+
+ 
+});
+ 
+function filter2_1() {
+    document.querySelector('#filter2').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Латы</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Кольчуга</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Кожа</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Ткань</label>\
+    </div>');
+}
+ 
+function filter2_2() {
+    document.querySelector('#filter2').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter2_2">\
+        <option selected>< Оружие ></option>\
+        <option value="1">Одноручное</option>\
+        <option value="2">Двуручное</option>\
+    </select>');
+}
+ 
+function filter2_3() {
+    document.querySelector('#filter2').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Кинжалы</label>\
+    </div>');
+}
+ 
+function filter2_4() {
+    document.querySelector('#filter2').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Ванды</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Луки</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Арбалеты</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Стрелковое</label>\
+    </div>');
+}
+ 
+function filter2_5() {
+    document.querySelector('#filter2').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter2_5">\
+        <option selected>< Реликвия ></option>\
+        <option value="1">Манускрип</option>\
+        <option value="2">Идол</option>\
+        <option value="3">Тотем</option>\
+    </select>');
+}
+
+
+
+
+
+ 
+function filter3_1() {
+    document.querySelector('#filter3').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Кинжалы</label>\
+    </div>');
+}
+ 
+function filter3_2() {
+    document.querySelector('#filter3').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Посохи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">\
+        <label class="form-check-label" for="inlineCheckbox5">Копья</label>\
+    </div>');
+}
+
+
+
+
+
+
+
+
+ 
+function filter22_11() {
+    document.querySelector('#filter22').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter22_11">\
+        <option selected>< Броня ></option>\
+        <option value="1">Голова</option>\
+        <option value="2">Плечи</option>\
+        <option value="3">Спина</option>\
+        <option value="4">Тело</option>\
+        <option value="5">Наручи</option>\
+        <option value="6">Перчатки</option>\
+        <option value="7">Пояс</option>\
+        <option value="8">Штаны</option>\
+        <option value="9">Сапоги</option>\
+        <option value="10">Щит</option>\
+    </select>');
+}
+ 
+function filter22_12() {
+    document.querySelector('#filter22').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter22_12">\
+        <option selected>< Бижутерия ></option>\
+        <option value="1">Шея</option>\
+        <option value="2">Кольцо</option>\
+        <option value="3">Тринкет</option>\
+    </select>');
+}
+ 
+function filter22_13() {
+    document.querySelector('#filter22').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter22_13">\
+        <option selected>< Оружие ></option>\
+        <option value="1">Одноручное</option>\
+        <option value="2">Двуручное</option>\
+    </select>');
+}
+ 
+function filter22_14() {
+    document.querySelector('#filter22').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter22_14">\
+        <option selected>< Дальний бой ></option>\
+        <option value="1">Ванды</option>\
+        <option value="2">Луки/Арбалеты/Огнестрельное</option>\
+    </select>');
+}
+ 
+function filter22_15() {
+    document.querySelector('#filter22').insertAdjacentHTML('afterbegin',
+    '<select class="form-select" name="filter22_15">\
+        <option selected>< Реликвия ></option>\
+        <option value="1">Манускрип</option>\
+        <option value="2">Идол</option>\
+        <option value="3">Тотем</option>\
+    </select>');
+}
+ 
+function filter22_21() {
+    document.querySelector('#filter23').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Латы</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Кольчуга</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Кожа</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Ткань</label>\
+    </div>');
+}
+ 
+// одноручное оружие
+function filter22_22() {
+    document.querySelector('#filter23').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи в правую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры в правую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины в правую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Кинжалы в правую руку</label>\
+    </div>\
+    <br>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи в левую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры в левую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины в левую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Кинжалы в левую руку</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Оф-хенды</label>\
+    </div>');
+ 
+}
+ 
+// двуручное оружие
+function filter22_23() {
+    document.querySelector('#filter23').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">\
+        <label class="form-check-label" for="inlineCheckbox1">Мечи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Топоры</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Дубины</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Посохи</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">\
+        <label class="form-check-label" for="inlineCheckbox5">Копья</label>\
+    </div>');
+}
+ 
+// Луки/Арбалеты/Огнестрельное
+function filter22_24() {
+    document.querySelector('#filter23').insertAdjacentHTML('afterbegin',
+    '<div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">\
+        <label class="form-check-label" for="inlineCheckbox2">Луки</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">\
+        <label class="form-check-label" for="inlineCheckbox3">Арбалеты</label>\
+    </div>\
+    <div class="form-check form-check-inline">\
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">\
+        <label class="form-check-label" for="inlineCheckbox4">Стрелковое</label>\
+    </div>');
+}
+ 
+</script>
